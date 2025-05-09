@@ -1,0 +1,7 @@
+packages:
+  - templates/*
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - esbuild
+  - msw
