@@ -27,7 +27,7 @@ export async function copyTemplate(
 
   /**
    * Valid templates are:
-   * - example project directory from https://github.com/pizzajsdev/pizzajs/tree/main/examples
+   * - example project directory from https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates
    * - local file or directory on disk
    * - GitHub owner/repo shorthand
    * - GitHub owner/repo/directory shorthand
@@ -44,9 +44,9 @@ export async function copyTemplate(
     }
 
     if (isFolderName(template)) {
-      log(`Using a template from the https://github.com/pizzajsdev/pizzajs/tree/main/examples directory`)
+      log(`Using a template from the https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates directory`)
       await copyTemplateFromGithubRepoUrl(
-        `https://github.com/pizzajsdev/pizzajs/tree/main/examples/${template}`,
+        `https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates/${template}`,
         destPath,
         options,
       )

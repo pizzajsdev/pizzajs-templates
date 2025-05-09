@@ -241,10 +241,10 @@ async function copyTemplateToTempDirStep(ctx: Context) {
     info('Template:', ['Using ', color.reset(ctx.template), '...'])
   } else {
     log('')
-    info('Using default template', ['See https://github.com/pizzajsdev/pizzajs/tree/main/examples for more'])
+    info('Using default template', ['See https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates for more'])
   }
 
-  let template = ctx.template ?? 'https://github.com/pizzajsdev/pizzajs/tree/main/examples/basic'
+  let template = ctx.template ?? 'https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates/basic'
 
   await loadingIndicator({
     start: 'Template copying...',
@@ -265,7 +265,7 @@ async function copyTemplateToTempDirStep(ctx: Context) {
               ? err.message
               : 'Something went wrong. Run `create-pizza-app --debug` to see more info.\n\n' +
                   'Open an issue to report the problem at ' +
-                  'https://github.com/pizzajsdev/pizzajs/issues/new',
+                  'https://github.com/pizzajsdev/pizzajs-templates/issues/new',
           )
           throw err
         },
@@ -626,7 +626,7 @@ ${color.heading("Creating a new project")}:
 
 React Router projects are created from templates. A template can be:
 
-- a folder name from the https://github.com/pizzajsdev/pizzajs/tree/main/examples directory
+- a folder name from the https://github.com/pizzajsdev/pizzajs-templates/tree/main/templates directory
 - a GitHub repo shorthand, :username/:repo or :username/:repo/:directory
 - the URL of a GitHub repo (or directory within it)
 - the URL of a tarball
@@ -636,7 +636,7 @@ React Router projects are created from templates. A template can be:
 Examples:
 ${[
   "basic",
-  "pizzajsdev/pizzajs/examples/basic",
+  "pizzajsdev/pizzajs-templates/templates/basic",
   ":username/:repo",
   ":username/:repo/:directory",
   "https://github.com/:username/:repo",

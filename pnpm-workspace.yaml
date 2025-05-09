@@ -1,5 +1,6 @@
 packages:
   - templates/*
+  - create-pizza-app
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
