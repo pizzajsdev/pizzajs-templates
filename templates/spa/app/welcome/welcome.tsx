@@ -5,7 +5,7 @@ export function Welcome() {
     <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
         <header className="flex flex-col items-center gap-9">
-          <h1 className="text-4xl font-bold">Welcome to Pizzajs (Basic SSR template)</h1>
+          <h1 className="text-4xl font-bold">Welcome to Pizzajs (SPA template)</h1>
           <Link
             to="/demos"
             className="text-blue-500 hover:text-blue-600 font-medium p-2 rounded-md border border-blue-500"
