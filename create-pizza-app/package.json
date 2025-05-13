@@ -40,7 +40,7 @@
     "log-update": "^6.1.0",
     "proxy-agent": "^6.5.0",
     "recursive-readdir": "^2.2.3",
-    "semver": "^7.7.1",
+    "semver": "^7.7.2",
     "sisteransi": "^1.0.5",
     "sort-package-json": "^3.2.1",
     "strip-ansi": "^7.1.0",
