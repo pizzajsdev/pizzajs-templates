@@ -23,11 +23,11 @@
   },
   "devDependencies": {
     "@react-router/dev": "^7.6.0",
-    "@tailwindcss/vite": "^4.1.6",
-    "@types/node": "^22.15.17",
+    "@tailwindcss/vite": "^4.1.7",
+    "@types/node": "^22.15.18",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
-    "tailwindcss": "^4.1.6",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4"
