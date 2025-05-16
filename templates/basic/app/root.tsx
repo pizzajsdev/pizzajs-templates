@@ -3,6 +3,10 @@ import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration }
 import type { Route } from './+types/root'
 import appInlineCss from './app.css?inline'
 
+export function meta({}: Route.MetaArgs) {
+  return [{ title: 'New React Router App' }, { name: 'description', content: 'Welcome to React Router!' }]
+}
+
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {

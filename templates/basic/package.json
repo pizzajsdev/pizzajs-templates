@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev --open",
+    "build": "rm -rf ./build && PIZZA_APP_BASE_PATH= react-router build",
+    "dev": "PIZZA_APP_BASE_PATH= react-router dev --open",
     "lint": "npm run typecheck",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"

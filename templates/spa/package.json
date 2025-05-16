@@ -3,10 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev --open",
+    "build": "rm -rf ./build && PIZZA_APP_BASE_PATH=/foo/ react-router build",
+    "dev": "PIZZA_APP_BASE_PATH=/foo/ react-router dev --open",
     "lint": "npm run typecheck",
-    "start": "react-router-serve ./build/server/index.js",
+    "postbuild__withbasepath": "mv ./build/client/foo/* ./build/client/ && mv ./build/client ./build/foo",
+    "start": "npx -y http-server ./build",
+    "start__withbasepath": "npm run build && npx -y http-server ./build -o /foo",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {

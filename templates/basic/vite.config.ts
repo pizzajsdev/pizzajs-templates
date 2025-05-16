@@ -13,4 +13,6 @@ export default defineConfig({
     reactRouter(),
     tsconfigPaths(),
   ],
+  // If defined, the base path should contain start + end slashes, e.g. VITE_APP_BASE_PATH=/foo/
+  // base: process.env['PIZZA_APP_BASE_PATH'],
 })
