@@ -12,7 +12,7 @@ on:
 env:
   APP_CI: true
   APP_ENV: development
-  NODE_VERSION: 22.15.0
+  NODE_VERSION: 24.4.1
   PNPM_VERSION: 10.9.0
 
 concurrency:
@@ -33,6 +33,10 @@ jobs:
         # NODE_AUTH_TOKEN is needed to install private Github packages
         # env:
         #   NODE_AUTH_TOKEN: ${{ secrets.PKG_REGISTRY_TOKEN }}
+
+      - name: 'Copy all .env.example files to .env recursively'
+        run: |
+          find . -type f -name '.env.example' -exec sh -c 'cp "$1" "${1%.example}"' _ {} \;
 
       - name: 'Build project'
         run: pnpm build
