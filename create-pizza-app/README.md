@@ -1,11 +1,11 @@
 Creates a new [PizzaJS](https://pizzajs.dev) app.
 
 ```sh
-npx create-pizzajs-app my-app
+npx create-pizza-app my-app
 ```
 
 ## Usage
 
 ```sh
-npx create-pizzajs-app --help
+npx create-pizza-app --help
 ```

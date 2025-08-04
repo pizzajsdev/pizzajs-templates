@@ -1,6 +1,7 @@
 {
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
+  "description": "PizzaJS Templates. For the create-pizza-app CLI code, see the directory with the same name.",
   "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
