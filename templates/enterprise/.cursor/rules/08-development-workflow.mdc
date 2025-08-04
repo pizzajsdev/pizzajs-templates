@@ -1,0 +1,125 @@
+---
+description: Development workflow, scripts, and best practices
+---
+
+# Development Workflow
+
+## Scripts Overview
+Reference: [package.json](mdc:package.json) scripts section
+
+### Development
+```bash
+# Start development server
+pnpm dev
+
+# Debug mode with React Scan
+pnpm dev:debug
+
+# Debug routes
+pnpm dev:debug-routes
+```
+
+### Code Generation
+```bash
+# Full codegen (Prisma + React Router types)
+pnpm codegen
+
+# Prisma client only
+pnpm db:generate
+```
+
+### Database
+```bash
+# Development migrations
+pnpm db:migrate
+
+# Production deployment
+pnpm db:migrate-prod
+```
+
+### Building
+```bash
+# Development build
+pnpm build
+
+# Production build with migrations
+pnpm build:prod
+
+# PWA assets generation
+pnpm build:pwa-assets
+```
+
+### Code Quality
+```bash
+# Full lint suite
+pnpm lint
+
+# Individual checks
+pnpm typecheck
+pnpm lint:eslint
+pnpm lint:madge      # Circular dependency detection
+pnpm format:lint     # Prettier check
+
+# Auto-format
+pnpm format
+```
+
+### Testing
+```bash
+# Unit tests (Bun)
+pnpm test
+
+# E2E tests (Playwright)
+pnpm test:e2e
+```
+
+## Development Environment
+- **Port**: 3000 (development), 4000 (production start)
+- **Host**: 0.0.0.0 (accessible from network)
+- **Auto-open**: Browser opens automatically
+
+## TypeScript Workflow
+1. Run `pnpm codegen` before type checking
+2. Don't edit files in `app/generated/`
+3. Don't edit `+types/*` directories (auto-generated)
+4. Type errors in route types resolve when React Router is running
+
+## Code Quality Tools
+- **ESLint**: [eslint.config.js](mdc:eslint.config.js)
+- **Prettier**: Auto-formatting with Tailwind plugin
+- **Madge**: Circular dependency detection (excludes `app/generated/`)
+- **TypeScript**: Strict configuration
+
+## Docker Development
+- **Compose**: [docker-compose.yml](mdc:docker-compose.yml)
+- **Dockerfile**: [Dockerfile](mdc:Dockerfile)
+- **Local Data**: `.local/` directory for development files
+
+## CI/CD
+- **Platform**: GitHub Actions
+- **Tests**: Run in isolation from Vercel
+- **Scheduled Scripts**: GitHub Actions (not Vercel cron)
+
+## Package Management
+- **Manager**: pnpm (version 10.14.0)
+- **Node**: >= 22.15.0
+- **Workspaces**: [pnpm-workspace.yaml](mcd:pnpm-workspace.yaml)
+
+## Dependency Updates
+```bash
+# Update all dependencies
+pnpm update-deps
+
+# Reinstall with overrides applied
+pnpm install
+```
+
+## Patches
+- **Location**: [patches/](mdc:patches/)
+- **React Router**: Required workaround for Vercel middleware
+- **Created with**: `pnpm patch`
+
+## Environment Files
+- `.env` - Local development
+- `.env.local` - Local overrides (gitignored)
+- Set `APP_ENV` to control environment detection

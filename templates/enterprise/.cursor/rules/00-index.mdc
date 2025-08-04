@@ -1,0 +1,59 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules Index
+
+This project has comprehensive Cursor rules to guide development. All rules are located in [.cursor/rules/](.cursor/rules/).
+
+## Rule Categories
+
+### 🏗️ Architecture & Structure
+- **[01-project-architecture.mdc](.cursor/rules/01-project-architecture.mdc)** - Overall project structure and DDD principles
+- **[05-ddd-patterns.mdc](.cursor/rules/05-ddd-patterns.mdc)** - Domain-Driven Design implementation patterns
+
+### ⚛️ React & Routing  
+- **[02-react-router-patterns.mdc](.cursor/rules/02-react-router-patterns.mdc)** - React Router 7+ route patterns and types
+- **[03-react-components.mdc](.cursor/rules/03-react-components.mdc)** - React 19+ component patterns and naming
+
+### 🎨 Styling & UI
+- **[04-tailwind-styling.mdc](.cursor/rules/04-tailwind-styling.mdc)** - TailwindCSS 4+ patterns and component styling
+
+### 🗄️ Data & Auth
+- **[06-database-patterns.mdc](.cursor/rules/06-database-patterns.mdc)** - Prisma, PostgreSQL, and repository patterns  
+- **[07-auth-patterns.mdc](.cursor/rules/07-auth-patterns.mdc)** - Better Auth integration and authentication
+
+### 🔧 Development
+- **[09-development-workflow.mdc](.cursor/rules/09-development-workflow.mdc)** - Scripts, tooling, and development practices
+
+## Quick Reference
+
+### Key Technologies
+- **React Router 7+** (successor to Remix) - import from "react-router"
+- **React 19.1+** - ref as prop, no forwardRef needed  
+- **TailwindCSS 4+** - CSS-based configuration
+- **Better Auth** - Authentication with Prisma adapter
+- **Prisma + PostgreSQL** - Database with repository pattern
+- **Domain-Driven Design** - Clean architecture with dependency injection
+
+### Key Files
+- [app/root.tsx](mdc:app/root.tsx) - Application root layout
+- [app/routes.ts](mdc:app/routes.ts) - Route configuration  
+- [react-router.config.ts](mdc:react-router.config.ts) - React Router setup
+- [docs/architecture.md](mdc:docs/architecture.md) - Detailed architecture guide
+- [docs/workarounds.md](mdc:docs/workarounds.md) - Known issues and solutions
+
+### Development Commands
+```bash
+pnpm dev          # Start development server
+pnpm codegen      # Generate Prisma client + RR types
+pnpm lint         # Full linting suite
+pnpm build        # Production build
+```
+
+## Rule Usage
+- **Always Applied**: Architecture, index rules
+- **File-Specific**: React Router routes, components, styling
+- **Manual**: Workarounds, specific troubleshooting
+
+These rules ensure consistent development patterns aligned with modern React Router 7+, React 19+, TailwindCSS 4+, and DDD principles.

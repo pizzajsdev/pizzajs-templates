@@ -1,0 +1,126 @@
+---
+globs: app/domain/**/*.ts,app/domain/**/*.tsx,app/runtime/repositories.server.ts,app/runtime/services.server.ts
+---
+
+# Domain-Driven Design (DDD) Patterns
+
+## Core Principles
+- **Domain layer isolation**: Code in `app/domain/` should NOT use runtime layer directly or indirectly
+- **Dependency Injection**: Use interfaces, not concrete classes
+- **Repository Pattern**: Abstract ORM/database operations
+- **Service Layer**: Business logic and requirements
+
+## Directory Structure per Domain
+```
+app/domain/[domain-name]/
+├── repos/
+│   ├── user-repository.ts          # Interface and Implementations
+├── services/
+│   ├── user-service.ts             # Interface and Implementations
+├── components/
+│   └── user-profile.tsx            # Domain components
+├── types.ts                        # Domain types
+├── utils.ts                        # Domain utilities
+└── validation.ts                   # Domain validation
+```
+
+## Repository Pattern
+
+### Interface Definition
+```typescript
+export interface UserRepository {
+  findById(id: string): Promise<UserRecord | null>
+  create(data: CreateUserData): Promise<UserRecord>
+  update(id: string, data: UpdateUserData): Promise<UserRecord>
+  delete(id: string): Promise<void>
+}
+```
+
+### Implementation
+```typescript
+import type { UserRepository } from './user-repository'
+import type { PrismaClient } from '@/generated/prisma/client'
+
+export class PrismaUserRepository implements UserRepository {
+  constructor(private db: PrismaClient) {}
+
+  async findById(id: string): Promise<UserRecord | null> {
+    return this.db.user.findUnique({ where: { id } })
+  }
+  
+  // ... other methods
+}
+```
+
+## Service Pattern
+
+### Interface Definition
+```typescript
+export interface UserService {
+  createUser(data: CreateUserRequest): Promise<UserRecord>
+  getUserProfile(id: string): Promise<UserProfile>
+}
+```
+
+### Implementation with DI
+```typescript
+export class UserServiceImpl implements UserService {
+  // Always define properties separately, never inline in the constructor
+  private userRepo: UserRepository
+  private emailService: EmailService
+
+  constructor(
+    userRepo: UserRepository,
+    emailService: EmailService
+  ) {
+    this.userRepo = userRepo
+    this.emailService = emailService
+  }
+
+  async createUser(data: CreateUserRequest): Promise<UserRecord> {
+    // Business logic here
+    const user = await this.userRepo.create(data)
+    await this.emailService.sendWelcomeEmail(user.email)
+    return user
+  }
+}
+```
+
+## Entity Types
+Use [app/domain/entity-types.ts](mdc:app/domain/entity-types.ts) for:
+- Abstracting vendor-generated types (Prisma, Better Auth)
+- Adding types to JSON fields
+- Domain-specific type augmentation
+
+```typescript
+import type { User } from '@/generated/prisma/client'
+
+export type UserRecord = User & {
+  // Add domain-specific fields
+  fullName: string
+}
+```
+
+## Runtime Integration
+Dependency injection happens manually in [app/runtime/](mdc:app/runtime/):
+
+```typescript
+// app/runtime/repositories.server.ts
+import { PrismaUserRepository } from '@/domain/users/repos/user-repository'
+import db from '@/runtime/db.server'
+
+const userRepository = new PrismaUserRepository(db)
+```
+
+```typescript
+// app/runtime/services.server.ts
+import { UserServiceImpl } from '@/domain/users/services/user-service'
+import userRepository from '@/runtime/repositories.server'
+
+export const userService = new UserServiceImpl(userRepository)
+```
+
+## Erasable TypeScript
+- **No property declarations** in constructors
+- **No enums** - use const objects or string unions
+- Keep syntax that can be erased by TypeScript compiler

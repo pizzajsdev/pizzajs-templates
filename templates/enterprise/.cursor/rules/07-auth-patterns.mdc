@@ -1,0 +1,46 @@
+---
+globs: app/runtime/auth.*.ts,app/routes/api/auth/**/*,app/routes/login.tsx
+description: Better Auth integration and authentication patterns
+---
+
+# Better Auth Patterns
+
+## Auth Configuration
+- **Server Setup**: [app/runtime/auth.server.ts](mdc:app/runtime/auth.server.ts)
+- **Client Setup**: [app/runtime/auth.client.ts](mdc:app/runtime/auth.client.ts)
+- **Auth Routes**: [app/routes/api/auth/[...all].tsx](mdc:app/routes/api/auth/[...all].tsx)
+
+## Better Auth Features
+- **Email/Password**: Enabled by default
+- **Social Providers**: Google OAuth (configured)
+- **Passkeys**: WebAuthn support
+- **Username**: Optional username field
+- **Prisma Adapter**: PostgreSQL integration
+
+## Auth Configuration
+- See [app/runtime/auth.server.ts](mdc:app/runtime/auth.server.ts) for implementation example of the auth server.
+- See [app/runtime/auth.client.ts](mdc:app/runtime/auth.client.ts) for implementation example of the auth client.
+
+## Client Usage
+See [app/routes/login.tsx](mdc:app/routes/login.tsx) for implementation example.
+
+## Route Protection
+```typescript
+// In route loaders
+// See app/routes/dashboard.tsx for an implementation example
+import { getCurrentUser } from '@/runtime/contexts.server'
+import { requiresAuthMiddleware } from '@/runtime/middlewares.server'
+import type { Route } from './+types/dashboard'
+
+export const unstable_middleware = [requiresAuthMiddleware] // this protects the route
+
+// Reads the current session user from the context and returns it as loaderData to the component props
+export const loader = async ({ context }: Route.LoaderArgs) => ({ user: getCurrentUser(context) })
+
+export default function Page({ loaderData }: Route.ComponentProps) {
+  return <div>Dashboard for {loaderData.user?.email}</div>
+}
+```
+
+## Login Route Pattern
+See [app/routes/login.tsx](mdc:app/routes/login.tsx) for implementation example.

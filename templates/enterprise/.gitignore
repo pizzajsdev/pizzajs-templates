@@ -1,0 +1,41 @@
+/node_modules/
+.DS_Store
+
+# React Router
+/.react-router/
+/build/
+.env
+.env*
+!.env.example
+.dev.vars
+
+# Artifacts
+*.tsbuildinfo
+*.pem
+*.log
+*.log*
+*~lock~
+*.zip
+*.tar.gz
+*.gz
+
+# Cloud Providers
+.wrangler/
+.vercel/
+
+# Prisma
+/app/generated/
+*.db
+*.db-journal
+
+# Development
+.local/
+*.local.ts
+*.local.md
+
+# Test
+test-results/
+test-e2e/**/*.jpg
+
+# Generated content
+public/site.webmanifest

@@ -1,0 +1,62 @@
+---
+globs: app/components/**/*.tsx,app/domain/**/*.tsx
+---
+
+# React Component Patterns
+
+## File Naming
+- Use **kebab-case.tsx** for component files
+- Prefer **named exports** over default exports
+- Example: `user-profile.tsx` exports `function UserProfile()`
+
+## React 19.1+ Patterns
+- **NO forwardRef needed** - `ref` is now a regular prop
+- Use React 19 features like `use()` hook for promises
+
+```tsx
+// ✅ React 19 pattern
+function Button({ ref, className, ...props }: ComponentProps<'button'> & { ref?: Ref<HTMLButtonElement> }) {
+  return <button ref={ref} className={cn('...', className)} {...props} />
+}
+
+// ❌ Old pattern - don't use forwardRef
+const Button = forwardRef<HTMLButtonElement, ComponentProps<'button'>>((props, ref) => {
+  // ...
+})
+```
+
+## Component Structure
+```tsx
+import * as React from 'react'
+import { cn } from '@/lib/utils'
+
+type MyComponentProps = {
+  // Define props with proper TypeScript
+} & React.ComponentProps<'div'>
+
+export function ComponentName({ className, ...props }: MyComponentProps) {
+  return (
+    <div className={cn('base-classes', className)} {...props}>
+      {/* Component content */}
+    </div>
+  )
+}
+```
+
+## State Management
+- **Prefer contexts and state** over prop drilling
+- Think about rendering performance
+- Follow React rules (no side effects in render)
+
+## UI Components
+- **Always try to find** local components from `@/components/ui` before trying to install or create new ones
+- Install new shadcn/ui components with `pnpm dlx shadcn@latest add <component>` when necessary
+- Use [cn() function](mdc:app/lib/utils.ts) for combining classNames
+- Example: [app/components/ui/button.tsx](mdc:app/components/ui/button.tsx)
+
+## Import Patterns
+```tsx
+import * as React from 'react'
+import { ComponentProps } from 'react'
+import { cn } from '@/lib/utils'
+```

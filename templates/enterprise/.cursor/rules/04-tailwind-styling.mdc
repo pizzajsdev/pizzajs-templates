@@ -1,0 +1,84 @@
+---
+globs: *.tsx,*.ts
+description: TailwindCSS 4+ styling patterns and best practices
+---
+
+# TailwindCSS 4+ Styling Guide
+
+## TailwindCSS 4 Features
+- Uses **CSS-based configuration** instead of JS config files
+- Improved performance and DX
+
+## className Patterns
+
+### Single Classes
+```tsx
+<div className="flex items-center justify-center" />
+```
+
+### Multiple Classes with cn()
+**Always wrap multiple classNames** with the [cn() function](mdc:app/lib/utils.ts):
+
+```tsx
+import { cn } from '@/lib/utils'
+
+// ✅ Correct - using cn()
+<div className={cn('base-class', 'another-class', className)} />
+
+// ✅ Conditional classes with objects
+<div className={cn({
+  'text-red-500': hasError,
+  'text-green-500': isSuccess,
+  'opacity-50': isDisabled
+})} />
+
+// ✅ Complex combinations
+<div className={cn(
+  'flex items-center justify-center',
+  'rounded-md border shadow-sm',
+  {
+    'bg-primary text-white': variant === 'primary',
+    'bg-secondary': variant === 'secondary'
+  },
+  className
+)} />
+```
+
+### Class Variance Authority (CVA)
+For component variants, use CVA pattern like in [app/components/ui/button.tsx](mdc:app/components/ui/button.tsx):
+
+```tsx
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const variants = cva(
+  "base classes",
+  {
+    variants: {
+      variant: {
+        default: 'variant classes',
+        destructive: 'destructive classes'
+      },
+      size: {
+        default: 'size classes',
+        sm: 'small classes'
+      }
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default'
+    }
+  }
+)
+```
+
+## CSS File Structure
+Modular CSS in [app/styles/](mdc:app/styles/):
+- [app/styles/base.css](mdc:app/styles/base.css) - Base styles
+- [app/styles/components.css](mdc:app/styles/components.css) - Component styles  
+- [app/styles/theme.css](mdc:app/styles/theme.css) - Theme variables
+- [app/app.css](mdc:app/app.css) - Main CSS importing others
+
+## Theme Support
+- Dark/Light mode with flash-less switching
+- CSS custom properties for theming
+- Use semantic color names (`gray-*`, `primary-*`, `secondary-*`, etc.)

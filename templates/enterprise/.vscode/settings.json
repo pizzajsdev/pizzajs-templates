@@ -1,0 +1,50 @@
+{
+  "window.commandCenter": true,
+  "css.customData": [".vscode/tailwind.json"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.removeUnusedImports": "explicit"
+  },
+  "typescript.preferences.organizeImports": {
+    "enabled": true,
+    "typeImports": true,
+    "typeImportsOrder": "alphabetical",
+    "typeImportsOrderStyle": "natural"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "prompt",
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\('(.*)'\\)", "cn\\(([^)]*)\\)", "twMerge\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    [
+      "createRecipeFn\\('(.*)'\\)",
+      "createTheme(?:<\\w+>)?\\s*\\(([^)]*)\\)",
+      "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?"
+    ]
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*Styles*",
+    ".*Class*",
+    ".*ClassName*",
+    ".*Classes*",
+    ".*ClassNames*",
+    ".*Recipe*",
+    ".*Recipes*",
+    ".*Variant*",
+    ".*Variants*"
+  ],
+  "files.exclude": {
+    "**/.next": true,
+    "**/.react-router": true,
+    "**/.vercel": true,
+    "**/.wrangler": true,
+    "**/tsconfig.tsbuildinfo": true,
+    "pnpm-lock.yaml": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

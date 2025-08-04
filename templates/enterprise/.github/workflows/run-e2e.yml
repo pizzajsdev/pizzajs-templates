@@ -1,0 +1,23 @@
+name: Run E2E tests
+
+on:
+  workflow_dispatch:
+
+env:
+  APP_URL: https://example.com
+
+jobs:
+  runE2E:
+    name: Run E2E tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+
+      - name: 'Setup project'
+        uses: ./.github/actions/setup-project
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Run E2E tests'
+        run: APP_URL='${{ env.APP_URL }}' pnpm test:e2e

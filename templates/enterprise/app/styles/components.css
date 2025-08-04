@@ -1,0 +1,13 @@
+@layer components {
+  .app-container {
+    width: 100%;
+    min-height: 100vh;
+    z-index: 100;
+  }
+
+  .app-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

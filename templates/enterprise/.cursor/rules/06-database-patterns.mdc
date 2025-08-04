@@ -1,0 +1,99 @@
+---
+globs: app/runtime/db.server.ts,app/domain/**/*repository*.ts,prisma/**/*
+description: Database, Prisma, and repository patterns
+---
+
+# Database and Prisma Patterns
+
+## Database Setup
+- **Main Database**: PostgreSQL via Prisma
+- **Caching**: Redis/Upstash for LRU cache and rate limiting
+- **Database Client**: [app/runtime/db.server.ts](mdc:app/runtime/db.server.ts)
+
+## Prisma Configuration
+- **Schema**: [prisma/schema.prisma](mdc:prisma/schema.prisma)
+- **Generated Client**: [app/generated/prisma/client](mdc:app/generated/prisma/client)
+- **Migrations**: [prisma/migrations/](mdc:prisma/migrations/)
+
+## Repository Pattern for Prisma Abstraction
+
+### Repository Interface
+```typescript
+export interface UserRepository {
+  findById(id: string): Promise<UserRecord | null>
+  findByEmail(email: string): Promise<UserRecord | null>
+  create(data: CreateUserData): Promise<UserRecord>
+  update(id: string, data: Partial<UserRecord>): Promise<UserRecord>
+  delete(id: string): Promise<void>
+  findMany(filters?: UserFilters): Promise<UserRecord[]>
+}
+```
+
+### Prisma Implementation
+```typescript
+import type { PrismaClient } from '@/generated/prisma/client'
+import type { UserRepository } from './user-repository'
+import type { UserRecord } from '@/domain/entity-types'
+
+export class PrismaUserRepository implements UserRepository {
+  constructor(private db: PrismaClient) {}
+
+  async findById(id: string): Promise<UserRecord | null> {
+    return this.db.user.findUnique({
+      where: { id },
+      include: {
+        // Include related data as needed
+      }
+    })
+  }
+
+  async create(data: CreateUserData): Promise<UserRecord> {
+    return this.db.user.create({
+      data,
+      include: {
+        // Include related data
+      }
+    })
+  }
+
+  // ... implement other methods
+}
+```
+
+## Entity Types Abstraction
+Use [app/domain/entity-types.ts](mdc:app/domain/entity-types.ts) instead of direct Prisma types:
+
+```typescript
+// ✅ Use entity types
+import type { UserRecord } from '@/domain/entity-types'
+
+// ❌ Don't use Prisma types directly in domain
+import type { User } from '@/generated/prisma/client'
+```
+
+## Database Scripts and Commands
+```bash
+# Generate Prisma client
+pnpm db:generate
+
+# Run migrations in development
+pnpm db:migrate
+
+# Deploy migrations to production
+pnpm db:migrate-prod
+```
+
+## Caching Patterns
+Available cache implementations in [app/lib/cache/](mdc:app/lib/cache/):
+- [app/lib/cache/redis-cache.ts](mdc:app/lib/cache/redis-cache.ts) - Redis/Upstash
+- [app/lib/cache/indexeddb-cache.ts](mdc:app/lib/cache/indexeddb-cache.ts) - Client-side
+- [app/lib/cache/null-cache.ts](mdc:app/lib/cache/null-cache.ts) - No-op for testing
+
+The redis one is integrated in [app/runtime/cache.server.ts](mdc:app/runtime/cache.server.ts).
+
+Use IndexedDB cache for client-side caching.
+
+## Rate Limiting
+- Implementation: [app/lib/ratelimit/upstash-ratelimiter.ts](mdc:app/lib/ratelimit/upstash-ratelimiter.ts)
+- Uses Redis/Upstash backend
+- Integrated in [app/runtime/ratelimit.server.ts](mdc:app/runtime/ratelimit.server.ts)

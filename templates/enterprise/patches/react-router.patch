@@ -1,0 +1,95 @@
+diff --git a/dist/development/chunk-KIUJAIYX.mjs b/dist/development/chunk-KIUJAIYX.mjs
+index ee042dd2a38e98a646a2ad533455ccbbd5be21aa..63b78b29b2d9cfc9750801bc9d6a12fa37e13311 100644
+--- a/dist/development/chunk-KIUJAIYX.mjs
++++ b/dist/development/chunk-KIUJAIYX.mjs
+@@ -1074,12 +1074,16 @@ var createRequestHandler = (build, mode) => {
+       });
+     };
+     if (_build.future.unstable_middleware) {
+-      if (initialContext == null) {
++      if (!initialContext) {
+         loadContext = new unstable_RouterContextProvider();
+       } else {
+         try {
++          const isValidContext = Symbol.iterator in initialContext
++          if(!isValidContext) {
++            console.warn('BREAKING: initialContext is not an instance of Map!', initialContext)
++          }
+           loadContext = new unstable_RouterContextProvider(
+-            initialContext
++            isValidContext ? initialContext : new Map()
+           );
+         } catch (e) {
+           let error = new Error(
+diff --git a/dist/development/index.js b/dist/development/index.js
+index b2a208733cc5de90083ad10609aa903635a3f553..97ac3d7eca420d540581c561cbfded3f585d3916 100644
+--- a/dist/development/index.js
++++ b/dist/development/index.js
+@@ -1159,12 +1159,17 @@ var createRequestHandler = (build, mode) => {
+       });
+     };
+     if (_build.future.unstable_middleware) {
+-      if (initialContext == null) {
++      if (!initialContext) {
+         loadContext = new (0, _chunkK7YFBME3js.unstable_RouterContextProvider)();
+       } else {
+         try {
++          const isValidContext = Symbol.iterator in initialContext
++          const validContext = isValidContext ? initialContext : new Map()
++          if(!isValidContext) {
++            console.warn('BREAKING: initialContext is not an instance of Map!', initialContext)
++          }
+           loadContext = new (0, _chunkK7YFBME3js.unstable_RouterContextProvider)(
+-            initialContext
++            validContext
+           );
+         } catch (e) {
+           let error = new Error(
+diff --git a/dist/production/chunk-K3SBCRK4.mjs b/dist/production/chunk-K3SBCRK4.mjs
+index f54765e918f02829a9570906ec012390a13dbf32..2af2534f08118837730557ef23dcddafc056ff43 100644
+--- a/dist/production/chunk-K3SBCRK4.mjs
++++ b/dist/production/chunk-K3SBCRK4.mjs
+@@ -1074,12 +1074,17 @@ var createRequestHandler = (build, mode) => {
+       });
+     };
+     if (_build.future.unstable_middleware) {
+-      if (initialContext == null) {
++      if (!initialContext) {
+         loadContext = new unstable_RouterContextProvider();
+       } else {
+         try {
++          const isValidContext = Symbol.iterator in initialContext
++          const validContext = isValidContext ? initialContext : new Map()
++          if(!isValidContext) {
++            console.warn('BREAKING: initialContext is not an instance of Map!', initialContext)
++          }
+           loadContext = new unstable_RouterContextProvider(
+-            initialContext
++            validContext
+           );
+         } catch (e) {
+           let error = new Error(
+diff --git a/dist/production/index.js b/dist/production/index.js
+index b4b017bdc4f1f66b2870c01ebc998cc3ba39d1a1..4e0ab7172611e5fd2f803ba48698bf7f48ed92fe 100644
+--- a/dist/production/index.js
++++ b/dist/production/index.js
+@@ -1159,12 +1159,17 @@ var createRequestHandler = (build, mode) => {
+       });
+     };
+     if (_build.future.unstable_middleware) {
+-      if (initialContext == null) {
++      if (!initialContext) {
+         loadContext = new (0, _chunk7OQROU2Djs.unstable_RouterContextProvider)();
+       } else {
+         try {
++          const isValidContext = Symbol.iterator in initialContext
++          const validContext = isValidContext ? initialContext : new Map()
++          if(!isValidContext) {
++            console.warn('BREAKING: initialContext is not an instance of Map!', initialContext)
++          }
+           loadContext = new (0, _chunk7OQROU2Djs.unstable_RouterContextProvider)(
+-            initialContext
++            validContext
+           );
+         } catch (e) {
+           let error = new Error(

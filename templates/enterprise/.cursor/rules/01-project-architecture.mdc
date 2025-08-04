@@ -1,0 +1,70 @@
+---
+alwaysApply: true
+---
+
+# Project Architecture Guide
+
+This is a React Router 7+ application using Domain-Driven Design (DDD) architecture with the following key structure:
+
+## Key Project Files
+- Main entry: [app/root.tsx](mdc:app/root.tsx)
+- Routes config: [app/routes.ts](mdc:app/routes.ts)
+- React Router config: [react-router.config.ts](mdc:react-router.config.ts)
+- Package config: [package.json](mdc:package.json)
+
+## Architecture Documentation
+- Full architecture guide: [docs/architecture.md](mdc:docs/architecture.md)
+- Known workarounds: [docs/workarounds.md](mdc:docs/workarounds.md)
+
+## Directory Structure
+
+### Core Application (`app/`)
+- `app/components/layout/` - Main layout components
+- `app/components/ui/` - Reusable UI components (shadcn/ui based)
+- `app/domain/` - Domain-specific code following DDD principles
+- `app/lib/` - Generic utility code
+- `app/routes/` - File-based routing (Next.js App Router style)
+- `app/runtime/` - Runtime dependencies and injected services
+- `app/styles/` - Modular CSS files
+- `app/generated/` - Auto-generated files (Prisma client, etc.)
+
+### Domain Layer (`app/domain/`)
+**Critical**: Domain code should NOT use runtime layer directly or indirectly.
+
+Structure per domain:
+- `[domain]/repos/` - Repository interfaces and implementations
+- `[domain]/services/` - Business logic services
+- `[domain]/components/` - Domain-specific React components
+- `[domain]/types.ts` - Domain-specific types
+- `[domain]/utils.ts` - Domain utilities
+- `[domain]/validation.ts` - Domain validation functions
+
+### Runtime Layer (`app/runtime/`)
+Dependency injection and service instances:
+- [app/runtime/auth.server.ts](mdc:app/runtime/auth.server.ts) - Better Auth setup
+- [app/runtime/cache.server.ts](mdc:app/runtime/cache.server.ts) - Cache instances
+- [app/runtime/contexts.server.ts](mdc:app/runtime/contexts.server.ts) - React Router contexts
+- [app/runtime/cookies.server.ts](mdc:app/runtime/cookies.server.ts) - Cookie stores
+- [app/runtime/db.server.ts](mdc:app/runtime/db.server.ts) - Prisma client
+- [app/runtime/env.server.ts](mdc:app/runtime/env.server.ts) - Environment variables
+- [app/runtime/middlewares.server.ts](mdc:app/runtime/middlewares.server.ts) - React Router middlewares
+- [app/runtime/ratelimit.server.ts](mdc:app/runtime/ratelimit.server.ts) - Rate limiters
+- [app/runtime/repositories.server.ts](mdc:app/runtime/repositories.server.ts) - Repository instances
+- [app/runtime/services.server.ts](mdc:app/runtime/services.server.ts) - Service instances
+
+
+## Technology Stack
+- **Framework**: React Router 7+ (successor to Remix)
+- **React**: 19.1+ (ref as prop, no forwardRef needed)
+- **Styling**: TailwindCSS 4+ (CSS-based config)
+- **UI Components**: shadcn/ui (prefer local components from `@/components/ui`)
+- **Auth**: Better Auth
+- **Database**: Prisma + PostgreSQL
+- **Caching**: Redis/Upstash
+- **Validation**: Zod
+- **Deployment**: Vercel
+
+## Import Patterns
+- Always import from "react-router" (not remix packages)
+- Use `@/` alias for app directory imports
+- Domain layer should use interfaces, not concrete classes
