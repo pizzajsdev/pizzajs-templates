@@ -9,6 +9,6 @@ export default {
     unstable_optimizeDeps: true,
   },
   presets: [createAutomaticPreset()],
-  // If defined, the base path should contain start + end slashes, e.g. VITE_APP_BASE_PATH=/foo/
+  // If defined, the base path should contain start + end slashes, e.g. PIZZA_APP_BASE_PATH=/foo/
   // basename: import.meta.env['PIZZA_APP_BASE_PATH'],
 } satisfies Config

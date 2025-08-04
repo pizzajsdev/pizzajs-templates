@@ -7,7 +7,7 @@ export default {
   future: {
     unstable_optimizeDeps: true,
   },
-  // If defined, the base path should contain start + end slashes, e.g. VITE_APP_BASE_PATH=/foo/
+  // If defined, the base path should contain start + end slashes, e.g. PIZZA_APP_BASE_PATH=/foo/
   basename: process.env['PIZZA_APP_BASE_PATH'] || '/',
   async prerender({ getStaticPaths }) {
     const demos = ['demo-1', 'demo-2', 'demo-3']

@@ -18,3 +18,5 @@ pnpm-*.yaml
 
 public/
 drizzle/
+generated/
+test-results/
